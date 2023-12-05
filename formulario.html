@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario</title>
+</head>
+<body>
+
+<h1>Formulario</h1>
+
+<form id="miFormulario">
+  <label for="nombre">Nombre:</label>
+  <input type="text" id="nombre" name="nombre" required>
+
+  <label for="correo">Correo electrónico:</label>
+  <input type="email" id="correo" name="correo" required>
+
+  <button type="button" onclick="enviarFormulario()">Enviar</button>
+</form>
+
+<script>
+  function enviarFormulario() {
+    var nombre = document.getElementById('nombre').value;
+    var correo = document.getElementById('correo').value;
+
+    // Construir objeto con datos a enviar
+    var datos = {
+      nombre: nombre,
+      correo: correo
+    };
+
+    // Hacer la solicitud a la Azure Function (debes reemplazar la URL con la de tu propia función)
+    fetch('URL_DE_TU_AZURE_FUNCTION', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(datos)
+    })
+    .then(response => response.json())
+    .then(data => {
+      // Manejar la respuesta de la función (puedes mostrar un mensaje de éxito, etc.)
+      console.log('Respuesta de la función:', data);
+      alert('Formulario enviado con éxito');
+    })
+    .catch(error => {
+      // Manejar errores
+      console.error('Error al enviar formulario:', error);
+      alert('Error al enviar el formulario');
+    });
+  }
+</script>
+
+</body>
+</html>
